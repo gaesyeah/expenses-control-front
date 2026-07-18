@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
-    font-family: ${({ theme }) => theme.fonts.Rubik};
+    font-family: ${({ theme }) => theme.fonts.Poppins};
   }
 
   html, body {

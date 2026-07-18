@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")!).render(
       <ResetStyle />
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
-        <ToastContainer />
+        <ToastContainer autoClose={1000} />
         <App />
       </QueryClientProvider>
     </ThemeProvider>
