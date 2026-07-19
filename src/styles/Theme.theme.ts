@@ -1,10 +1,11 @@
 export const theme = {
   colors: {
+    status: { red: "#d63e3eff", green: "#53d869ff" },
     background: {
       white: "#FFFFFF",
       main: "#66c9e2ff",
-      negative: "#e45454ff",
-      positive: "#6de681ff",
+      negative: "#d63e3eff",
+      positive: "#53d869ff",
       gray: ["#d6d6d6ff"],
       shadow: "rgba(0, 0, 0, 0.25)",
     },

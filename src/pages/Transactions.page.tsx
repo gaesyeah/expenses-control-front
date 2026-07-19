@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { CurrencyUtils } from "../utils/currency.util";
 import { SCPageSkeleton, SCTableContainer } from "./styles";
+import StatusBadge from "../components/StatusBadge.component";
 
 const initialTransactionDTO: TransactionDTO = {
   type: TransactionType.Expense,
@@ -132,6 +133,14 @@ export default function TransactionsPage() {
             ...rest,
             personName: person.name,
             value: CurrencyUtils.formatToBRL(value),
+            type: (
+              <StatusBadge
+                color={rest.type === TransactionType.Expense ? "red" : "green"}
+                text={
+                  rest.type === TransactionType.Expense ? "despesa" : "receita"
+                }
+              />
+            ),
           }))}
         />
       </SCTableContainer>
