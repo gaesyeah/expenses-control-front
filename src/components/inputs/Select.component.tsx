@@ -25,11 +25,11 @@ export default function Select<T extends FormType, K extends keyof T>({
   isLoading,
   ...rest
 }: SelectProps<T, K>) {
+  const placeholderOption = { label: "selecione", value: "" };
   const value = data?.[field];
-  const options = [
-    ...(value ? [] : [{ label: "selecione", value: "" }]),
-    ...(initialOptions ?? []),
-  ];
+  const options = value
+    ? (initialOptions ?? [])
+    : [placeholderOption, ...(initialOptions ?? [])];
 
   return (
     <SCLabel>

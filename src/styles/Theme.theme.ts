@@ -3,7 +3,8 @@ export const theme = {
     background: {
       white: "#FFFFFF",
       main: "#66c9e2ff",
-      cancel: "#e45454ff",
+      negative: "#e45454ff",
+      positive: "#6de681ff",
       gray: ["#d6d6d6ff"],
       shadow: "rgba(0, 0, 0, 0.25)",
     },

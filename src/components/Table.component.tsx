@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
-import styled, { type CSSProperties } from "styled-components";
+import { RotatingLines } from "react-loader-spinner";
+import styled, { useTheme, type CSSProperties } from "styled-components";
 
 type TableItem = Record<string, ReactNode> & { id: string };
 
@@ -16,10 +17,24 @@ export default function Table<T extends TableItem>({
   style,
   isLoading,
 }: TableProps<T>) {
-  if (isLoading) return null;
+  const isTableEmpty = !items || items?.length === 0;
 
+  const { main } = useTheme().colors.background;
   return (
     <SCTableContainer style={style}>
+      <SCLoading
+        visible={isLoading}
+        color={main}
+        height="100"
+        width="100"
+        wrapperStyle={{
+          position: "absolute",
+          top: "60%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      />
+
       <SCTable>
         <thead>
           <tr>
@@ -31,6 +46,14 @@ export default function Table<T extends TableItem>({
           </tr>
         </thead>
         <tbody>
+          {isTableEmpty && (
+            <tr>
+              <SCEmpty colSpan={columns.length}>
+                {!isLoading ? "Tabela sem dados." : ""}
+              </SCEmpty>
+            </tr>
+          )}
+
           {items?.map((item) => (
             <tr key={item.id}>
               {columns.map(({ key }) => {
@@ -54,10 +77,19 @@ export default function Table<T extends TableItem>({
   );
 }
 
+const SCLoading = styled(RotatingLines)`
+  color: ${({ theme }) => theme.colors.background.main};
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 const SCTableContainer = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.background.main};
   border-radius: 10px;
   overflow: auto;
+  position: relative;
+  display: flex;
 `;
 const SCTable = styled.table`
   width: 100%;
@@ -91,4 +123,9 @@ const SCTable = styled.table`
     background-color: ${({ theme }) => theme.colors.background.main};
     border-radius: 10px;
   }
+`;
+
+const SCEmpty = styled.td`
+  text-align: center;
+  height: 130px;
 `;

@@ -1,10 +1,9 @@
 import Input from "../components/inputs/Input.component";
-import PageSkeleton from "../components/PageSkeleton.component";
 import useStateOnForm from "../hooks/useStateOnForm.hook";
 import type { PersonDTO, PersonResponse } from "../types/person.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PersonService from "../services/person.service";
-import { useMemo, type SubmitEvent } from "react";
+import { type SubmitEvent } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import SubmitButton from "../components/buttons/SubmitButton.component";
@@ -15,6 +14,7 @@ import { QUERY_KEYS } from "../constants/queryKeys";
 import Swal from "sweetalert2";
 import FormContainer from "../components/FormContainer.component";
 import useQueryPersons from "../hooks/useQueryPersons.hook";
+import { SCPageSkeleton } from "./styles";
 
 const initialPersonDTO: PersonDTO = { name: "", age: 1 };
 
@@ -72,13 +72,10 @@ export default function PersonsPage() {
     });
   }
 
-  const isLoading = useMemo(
-    () => isLoadingPersons || isCreatingPerson || isDeletingPerson,
-    [isLoadingPersons, isCreatingPerson, isDeletingPerson],
-  );
+  const isLoading = isLoadingPersons || isCreatingPerson || isDeletingPerson;
 
   return (
-    <PageSkeleton>
+    <SCPageSkeleton>
       <FormContainer onSubmit={submitCreatePerson}>
         <Input
           required
@@ -122,6 +119,6 @@ export default function PersonsPage() {
           ]}
         />
       </FormContainer>
-    </PageSkeleton>
+    </SCPageSkeleton>
   );
 }

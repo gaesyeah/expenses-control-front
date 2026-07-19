@@ -57,6 +57,6 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.background.main} !important;
   }
   .swal2-cancel {
-    background-color: ${({ theme }) => theme.colors.background.cancel} !important;
+    background-color: ${({ theme }) => theme.colors.background.negative} !important;
   }
 `;

@@ -1,7 +1,6 @@
 import SubmitButton from "../components/buttons/SubmitButton.component";
 import FormContainer from "../components/FormContainer.component";
 import Input from "../components/inputs/Input.component";
-import PageSkeleton from "../components/PageSkeleton.component";
 import Table from "../components/Table.component";
 import useStateOnForm from "../hooks/useStateOnForm.hook";
 import {
@@ -9,14 +8,15 @@ import {
   type TransactionDTO,
 } from "../types/transaction.types";
 import useQueryPersons from "../hooks/useQueryPersons.hook";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../constants/queryKeys";
 import TransactionService from "../services/transactions.service";
-import styled from "styled-components";
 import Select from "../components/inputs/Select.component";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { CurrencyUtils } from "../utils/currency.util";
+import { SCPageSkeleton, SCTableContainer } from "./styles";
 
 const initialTransactionDTO: TransactionDTO = {
   type: TransactionType.Expense,
@@ -51,10 +51,8 @@ export default function TransactionsPage() {
       },
     });
 
-  const isLoading = useMemo(
-    () => isLoadingPersons || isLoadingTransactions || isCreatingTransaction,
-    [isLoadingPersons, isLoadingTransactions, isCreatingTransaction],
-  );
+  const isLoading =
+    isLoadingPersons || isLoadingTransactions || isCreatingTransaction;
 
   const { personId, type } = stateOnForm.data;
   const isSelectedPersonMinor =
@@ -82,7 +80,7 @@ export default function TransactionsPage() {
   }, [type, isSelectedPersonMinor]);
 
   return (
-    <PageSkeleton>
+    <SCPageSkeleton>
       <FormContainer onSubmit={() => createTransaction(stateOnForm.data)}>
         <Select
           required
@@ -118,8 +116,9 @@ export default function TransactionsPage() {
           type="number"
           min={1}
         />
-        <SubmitButton>Criar transação</SubmitButton>
+        <SubmitButton isLoading={isLoading}>Criar transação</SubmitButton>
       </FormContainer>
+
       <SCTableContainer>
         <Table
           isLoading={isLoading}
@@ -132,17 +131,10 @@ export default function TransactionsPage() {
           items={transactions?.map(({ value, person, ...rest }) => ({
             ...rest,
             personName: person.name,
-            value: `R$${value.toFixed(2)}`,
+            value: CurrencyUtils.formatToBRL(value),
           }))}
         />
       </SCTableContainer>
-    </PageSkeleton>
+    </SCPageSkeleton>
   );
 }
-
-const SCTableContainer = styled.div`
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 15px;
-  max-width: 650px;
-`;
