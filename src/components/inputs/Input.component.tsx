@@ -4,6 +4,8 @@ import type { FormType } from "../../types/form.types";
 import { inputStyles, SCLabel } from "./styles";
 import type { InputStateOnFormProps } from "../../types/props.types";
 
+//Proíbe o uso para quaisquer inputs que não utilizem value com string ou number
+//?Futuramente pode ser refatorado para suportar inputs que utilizem value de outros tipos
 type AllowedInputType = Exclude<
   HTMLInputTypeAttribute,
   | "button"
@@ -15,7 +17,8 @@ type AllowedInputType = Exclude<
   | "reset"
   | "submit"
 >;
-
+//?Remove a prop 'type' padrão do input e utiliza exclusivamente as selecionadas acima
+//?Proíbe o uso de 'value' e 'onChange', já que o controle do input é feito pelo hook 'useStateOnForm'
 type InputProps<T extends FormType, K extends keyof T> = Readonly<
   InputStateOnFormProps<
     Omit<ComponentProps<"input">, "type" | "value" | "onChange"> & {

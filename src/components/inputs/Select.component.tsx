@@ -4,16 +4,14 @@ import type { InputStateOnFormProps } from "../../types/props.types";
 import type { FormType } from "../../types/form.types";
 import styled from "styled-components";
 
+//?Proíbe o uso de 'value' e 'onChange', já que o controle do input é feito pelo hook 'useStateOnForm'
+type OptionProps = {
+  options:
+    | (Pick<ComponentProps<"option">, "value"> & { label: string })[]
+    | undefined;
+};
 type SelectProps<T extends FormType, K extends keyof T> = Readonly<
-  InputStateOnFormProps<
-    {
-      options:
-        | (Pick<ComponentProps<"option">, "value"> & { label: string })[]
-        | undefined;
-    } & ComponentProps<"select">,
-    T,
-    K
-  >
+  InputStateOnFormProps<OptionProps & ComponentProps<"select">, T, K>
 >;
 
 export default function Select<T extends FormType, K extends keyof T>({

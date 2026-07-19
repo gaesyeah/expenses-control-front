@@ -7,6 +7,9 @@ import type { ReactNode } from "react";
 import { FaMoneyBill1Wave, FaUsers } from "react-icons/fa6";
 import { TbReportMoney } from "react-icons/tb";
 
+//Feito dessa forma para que eu tenha acesso às configurações da rota
+//em outras partes do projeto, e conseguir navegar
+//e identificar a rota atual no header com as propriedades tipadas.
 export const routes = {
   persons: {
     path: "/",

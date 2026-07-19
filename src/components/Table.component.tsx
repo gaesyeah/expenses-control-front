@@ -56,6 +56,8 @@ export default function Table<T extends TableItem>({
 
           {items?.map((item) => (
             <tr key={item.id}>
+              {/*//?Renderiza o conteúdo de 'items' baseado na ordem e 
+                //? declaração das keys desejadas na prop 'columns'*/}
               {columns.map(({ key }) => {
                 const value = item[key];
                 return (

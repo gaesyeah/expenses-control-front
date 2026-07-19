@@ -17,8 +17,6 @@ export default function StatusBadge({ color, text }: StatusBadgeProps) {
 }
 
 const SCStatusBadge = styled.div<{ $color: colorKey }>`
-  background-color: ${({ $color, theme }) => theme.colors.status[$color]};
-  color: ${({ theme }) => theme.colors.font.white};
   margin: 0 auto;
   border-radius: 8px;
   font-weight: 500;
@@ -28,4 +26,6 @@ const SCStatusBadge = styled.div<{ $color: colorKey }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  background-color: ${({ $color, theme }) => theme.colors.status[$color]};
+  color: ${({ theme }) => theme.colors.font.white};
 `;

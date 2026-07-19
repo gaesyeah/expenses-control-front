@@ -129,16 +129,14 @@ export default function TransactionsPage() {
             { key: "personName", label: "Pessoa" },
             { key: "type", label: "Transação" },
           ]}
-          items={transactions?.map(({ value, person, ...rest }) => ({
+          items={transactions?.map(({ value, person, type, ...rest }) => ({
             ...rest,
             personName: person.name,
             value: CurrencyUtils.formatToBRL(value),
             type: (
               <StatusBadge
-                color={rest.type === TransactionType.Expense ? "red" : "green"}
-                text={
-                  rest.type === TransactionType.Expense ? "despesa" : "receita"
-                }
+                color={type === TransactionType.Expense ? "red" : "green"}
+                text={type === TransactionType.Expense ? "despesa" : "receita"}
               />
             ),
           }))}

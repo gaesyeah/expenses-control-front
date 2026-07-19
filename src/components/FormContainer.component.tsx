@@ -12,11 +12,11 @@ export default function FormContainer({
 }: FormContainerProps) {
   return (
     <SCForm
+      {...rest}
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit?.(e);
       }}
-      {...rest}
     >
       {children}
     </SCForm>

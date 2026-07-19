@@ -10,6 +10,7 @@ export default function Header() {
       <SCHeader>
         Controle de gastos
         <SCHeaderNavigation>
+          {/* //?Renderiza um botão de navegação para cada página do projeto */}
           {Object.values(routes).map((route) => (
             <NavigationButton route={route} key={route.label} />
           ))}
