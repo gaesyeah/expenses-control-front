@@ -9,16 +9,23 @@ type StatusBadgeProps = Readonly<{
 }>;
 
 export default function StatusBadge({ color, text }: StatusBadgeProps) {
-  return <SCStatusBadge $color={color}>{text}</SCStatusBadge>;
+  return (
+    <SCStatusBadge title={text} $color={color}>
+      {text}
+    </SCStatusBadge>
+  );
 }
 
 const SCStatusBadge = styled.div<{ $color: colorKey }>`
   background-color: ${({ $color, theme }) => theme.colors.status[$color]};
   color: ${({ theme }) => theme.colors.font.white};
+  margin: 0 auto;
   border-radius: 8px;
   font-weight: 500;
   font-size: 16px;
-  width: 90px;
-  margin: 0 auto;
+  max-width: 90px;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

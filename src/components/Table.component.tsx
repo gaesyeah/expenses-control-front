@@ -103,7 +103,6 @@ const SCTable = styled.table`
     vertical-align: middle;
     padding-top: 5px;
     padding-bottom: 5px;
-    max-width: 1px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
