@@ -46,10 +46,11 @@ export default function PersonsPage() {
 
   const { mutate: deletePerson, isPending: isDeletingPerson } = useMutation({
     mutationFn: (id: string) => PersonService.delete(id),
-    onSuccess: () => {
-      client.invalidateQueries({
-        queryKey: [QUERY_KEYS.persons, QUERY_KEYS.transactions],
-      });
+    onSuccess: async () => {
+      await Promise.all([
+        client.invalidateQueries({ queryKey: [QUERY_KEYS.persons] }),
+        client.invalidateQueries({ queryKey: [QUERY_KEYS.transactions] }),
+      ]);
       toast.success("Pessoa apagada com sucesso!");
     },
     onError: (error) => {
@@ -114,7 +115,7 @@ export default function PersonsPage() {
 const SCForm = styled.form`
   padding-left: 10px;
   padding-right: 10px;
-  max-width: 430px;
+  max-width: 500px;
   width: 100%;
   display: flex;
   flex-direction: column;

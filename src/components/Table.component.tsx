@@ -23,14 +23,13 @@ export default function Table<T extends TableItem>({
           </tr>
         </thead>
         <tbody>
-          {items?.map((item, index) => (
+          {items?.map((item) => (
             <tr key={item.id}>
               {columns.map(({ key }) => {
                 const value = item[key];
                 return (
                   <td
                     key={String(key)}
-                    style={index === items.length - 1 ? { border: "none" } : {}}
                     title={
                       typeof value !== "object" ? String(value) : undefined
                     }
@@ -68,6 +67,13 @@ const SCTable = styled.table`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: ${({ theme }) => theme.colors.background.gray["0"]};
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
   }
 
   thead {

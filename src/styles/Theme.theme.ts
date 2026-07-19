@@ -2,12 +2,13 @@ export const theme = {
   colors: {
     background: {
       white: "#FFFFFF",
-      main: "#61dbfb",
+      main: "#66c9e2ff",
+      gray: ["#d6d6d6ff"],
       shadow: "rgba(0, 0, 0, 0.25)",
     },
     font: {
       white: "#FFFFFF",
-      main: "#61dbfb",
+      main: "#66c9e2ff",
       gray: [],
     },
   },
