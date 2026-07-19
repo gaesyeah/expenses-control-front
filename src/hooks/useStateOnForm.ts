@@ -8,7 +8,10 @@ export default function useStateOnForm<T extends FormType>(initialData: T) {
     key: K,
     { target: { value } }: ChangeEvent<HTMLInputElement>,
   ) {
-    setData((prev) => ({ ...prev, [key]: value }));
+    setData((prev) => ({
+      ...prev,
+      [key]: typeof prev[key] === "number" ? Number(value) : value,
+    }));
   }
 
   return { data, setData, onChangeData };

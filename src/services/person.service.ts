@@ -13,4 +13,8 @@ export default class PersonService {
     const person = await api.post<PersonResponse>(route, dto);
     return person.data;
   }
+
+  public static delete(id: string) {
+    return api.delete(`${route}/${id}`);
+  }
 }

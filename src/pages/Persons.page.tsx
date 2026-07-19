@@ -8,13 +8,16 @@ import PersonService from "../services/person.service";
 import { useMemo, type SubmitEvent } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import SubmitButton from "../components/SubmitButton.component";
+import SubmitButton from "../components/buttons/SubmitButton.component";
+import Table from "../components/Table.component";
+import CircularButton from "../components/buttons/CircularButton.component";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const queryKey: string[] = ["persons"];
 
 const initialPersonDTO: PersonDTO = { name: "", age: 0 };
 
-export default function Persons() {
+export default function PersonsPage() {
   const stateOnForm = useStateOnForm<PersonDTO>(initialPersonDTO);
 
   const { data: persons, isLoading: isLoadingPersons } = useQuery({
@@ -23,7 +26,8 @@ export default function Persons() {
   });
 
   const client = useQueryClient();
-  const { mutate, isPending: isCreatingPerson } = useMutation({
+
+  const { mutate: createPerson, isPending: isCreatingPerson } = useMutation({
     mutationFn: (dto: PersonDTO) => PersonService.create(dto),
     onSuccess: () => {
       stateOnForm.setData(initialPersonDTO);
@@ -36,22 +40,32 @@ export default function Persons() {
       }
     },
   });
-
-  function createPerson(e: SubmitEvent<HTMLFormElement>) {
+  function submitPerson(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    mutate(stateOnForm.data);
+    createPerson(stateOnForm.data);
   }
 
-  const isLoading = useMemo(
-    () => isLoadingPersons || isCreatingPerson,
-    [isLoadingPersons, isCreatingPerson],
-  );
+  const { mutate: deletePerson, isPending: isDeletingPerson } = useMutation({
+    mutationFn: (id: string) => PersonService.delete(id),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey });
+      toast.success("Pessoa apagada com sucesso!");
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.detail);
+      }
+    },
+  });
 
-  console.log(persons);
+  const isLoading = useMemo(
+    () => isLoadingPersons || isCreatingPerson || isDeletingPerson,
+    [isLoadingPersons, isCreatingPerson, isDeletingPerson],
+  );
 
   return (
     <Page>
-      <SCForm onSubmit={createPerson}>
+      <SCForm onSubmit={submitPerson}>
         <Input
           required
           isLoading={isLoading}
@@ -69,15 +83,36 @@ export default function Persons() {
           label="idade"
           field="age"
           type="number"
+          max={150}
         />
         <SubmitButton isLoading={isLoading}>Criar pessoa</SubmitButton>
+
+        <Table
+          items={persons?.map((person) => ({
+            ...person,
+            delete: (
+              <CircularButton
+                isLoading={isLoading}
+                onClick={() => deletePerson(person.id)}
+              >
+                <FaRegTrashCan size={20} />
+              </CircularButton>
+            ),
+          }))}
+          columns={[
+            { key: "name", label: "Nome" },
+            { key: "age", label: "Idade" },
+            { key: "delete", label: "Apagar" },
+          ]}
+        />
       </SCForm>
     </Page>
   );
 }
 
 const SCForm = styled.form`
-  padding: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
   width: 430px;
   display: flex;
   flex-direction: column;
