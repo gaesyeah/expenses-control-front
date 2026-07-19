@@ -12,8 +12,7 @@ import SubmitButton from "../components/buttons/SubmitButton.component";
 import Table from "../components/Table.component";
 import CircularButton from "../components/buttons/CircularButton.component";
 import { FaRegTrashCan } from "react-icons/fa6";
-
-const queryKey: string[] = ["persons"];
+import { QUERY_KEYS } from "../constants/queryKeys";
 
 const initialPersonDTO: PersonDTO = { name: "", age: 0 };
 
@@ -21,7 +20,7 @@ export default function PersonsPage() {
   const stateOnForm = useStateOnForm<PersonDTO>(initialPersonDTO);
 
   const { data: persons, isLoading: isLoadingPersons } = useQuery({
-    queryKey,
+    queryKey: [QUERY_KEYS.persons],
     queryFn: PersonService.readAll,
   });
 
@@ -31,7 +30,7 @@ export default function PersonsPage() {
     mutationFn: (dto: PersonDTO) => PersonService.create(dto),
     onSuccess: () => {
       stateOnForm.setData(initialPersonDTO);
-      client.invalidateQueries({ queryKey });
+      client.invalidateQueries({ queryKey: [QUERY_KEYS.persons] });
       toast.success("Pessoa criada com sucesso!");
     },
     onError: (error) => {
@@ -48,7 +47,9 @@ export default function PersonsPage() {
   const { mutate: deletePerson, isPending: isDeletingPerson } = useMutation({
     mutationFn: (id: string) => PersonService.delete(id),
     onSuccess: () => {
-      client.invalidateQueries({ queryKey });
+      client.invalidateQueries({
+        queryKey: [QUERY_KEYS.persons, QUERY_KEYS.transactions],
+      });
       toast.success("Pessoa apagada com sucesso!");
     },
     onError: (error) => {
@@ -111,9 +112,10 @@ export default function PersonsPage() {
 }
 
 const SCForm = styled.form`
-  padding-left: 30px;
-  padding-right: 30px;
-  width: 430px;
+  padding-left: 10px;
+  padding-right: 10px;
+  max-width: 430px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;

@@ -15,6 +15,9 @@ export const theme = {
     Poppins: '"Poppins", sans-serif',
     Rubik: '"Rubik", sans-serif',
   },
+  breakpoints: {
+    mobile: "576px",
+  },
 };
 
 export type Theme = typeof theme;

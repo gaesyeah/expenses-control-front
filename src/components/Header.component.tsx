@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { routes } from "../routes/routes.route";
 import NavigationButton from "./buttons/NavigationButton.component";
 
-const HEADER_HEIGHT = "80px";
+const HEADER_HEIGHT = "95px";
 
 export default function Header() {
   return (
@@ -24,7 +24,7 @@ const SCHeader = styled.header`
   height: ${HEADER_HEIGHT};
   background-color: ${({ theme }) => theme.colors.background.main};
   color: ${({ theme }) => theme.colors.font.white};
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   position: fixed;
   top: 0;
@@ -34,11 +34,22 @@ const SCHeader = styled.header`
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+  }
 `;
 const SCHeaderNavigation = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+    gap: 2px;
+  }
 `;
 const SCHeaderSpacer = styled.div`
   height: ${HEADER_HEIGHT};

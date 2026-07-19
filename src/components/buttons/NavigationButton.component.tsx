@@ -8,7 +8,7 @@ type NavigationButtonProps = Readonly<
 >;
 
 export default function NavigationButton({
-  route: { label, path },
+  route: { label, path, icon },
   ...rest
 }: NavigationButtonProps) {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export default function NavigationButton({
       $pathname={pathname}
       onClick={() => navigate(path)}
     >
+      {icon}
       {label}
     </SCNavigationButton>
   );
@@ -31,11 +32,14 @@ const SCNavigationButton = styled.button<{
   $path: string;
   $pathname: string;
 }>`
+  display: flex;
+  align-items: center;
+  gap: 5px;
   height: 30px;
   border-radius: 8px;
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   ${({
     $path,
