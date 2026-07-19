@@ -51,7 +51,7 @@ export default function Select<T extends FormType, K extends keyof T>({
   );
 }
 
-const SCSelect = styled.select<{ $isLoading: boolean }>`
+const SCSelect = styled.select<{ $isLoading: boolean | undefined }>`
   cursor: pointer;
   ${inputStyles}
 `;

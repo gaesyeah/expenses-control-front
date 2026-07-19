@@ -52,7 +52,7 @@ export default function TotalsPage() {
   );
 }
 
-const SCSummaryContainer = styled.div<{ $balance: number }>`
+const SCSummaryContainer = styled.div<{ $balance: number | undefined }>`
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -72,6 +72,7 @@ const SCSummaryContainer = styled.div<{ $balance: number }>`
         },
       },
     }) => {
+      if ($balance === undefined) return undefined;
       if ($balance < 0) return negative;
       if ($balance > 0) return positive;
       return undefined;

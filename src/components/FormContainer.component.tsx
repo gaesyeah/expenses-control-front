@@ -14,7 +14,7 @@ export default function FormContainer({
     <SCForm
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(e);
+        onSubmit?.(e);
       }}
       {...rest}
     >

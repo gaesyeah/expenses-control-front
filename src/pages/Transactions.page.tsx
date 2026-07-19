@@ -57,7 +57,7 @@ export default function TransactionsPage() {
 
   const { personId, type } = stateOnForm.data;
   const isSelectedPersonMinor =
-    persons?.find(({ id }) => id === personId)?.age < 18;
+    (persons?.find(({ id }) => id === personId)?.age ?? 18) < 18;
 
   const transactionTypeOptions = [
     { label: "despesa", value: TransactionType.Expense },
