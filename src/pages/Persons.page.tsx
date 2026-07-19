@@ -1,9 +1,8 @@
-import styled from "styled-components";
-import Input from "../components/Input.component";
-import Page from "../components/Page.component";
-import useStateOnForm from "../hooks/useStateOnForm";
+import Input from "../components/inputs/Input.component";
+import PageSkeleton from "../components/PageSkeleton.component";
+import useStateOnForm from "../hooks/useStateOnForm.hook";
 import type { PersonDTO, PersonResponse } from "../types/person.type";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PersonService from "../services/person.service";
 import { useMemo, type SubmitEvent } from "react";
 import { toast } from "react-toastify";
@@ -14,16 +13,15 @@ import CircularButton from "../components/buttons/CircularButton.component";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { QUERY_KEYS } from "../constants/queryKeys";
 import Swal from "sweetalert2";
+import FormContainer from "../components/FormContainer.component";
+import useQueryPersons from "../hooks/useQueryPersons.hook";
 
 const initialPersonDTO: PersonDTO = { name: "", age: 1 };
 
 export default function PersonsPage() {
   const stateOnForm = useStateOnForm<PersonDTO>(initialPersonDTO);
 
-  const { data: persons, isLoading: isLoadingPersons } = useQuery({
-    queryKey: [QUERY_KEYS.persons],
-    queryFn: PersonService.readAll,
-  });
+  const { persons, isLoadingPersons } = useQueryPersons();
 
   const client = useQueryClient();
 
@@ -51,6 +49,7 @@ export default function PersonsPage() {
       await Promise.all([
         client.invalidateQueries({ queryKey: [QUERY_KEYS.persons] }),
         client.invalidateQueries({ queryKey: [QUERY_KEYS.transactions] }),
+        client.invalidateQueries({ queryKey: [QUERY_KEYS.totals] }),
       ]);
       toast.success("Pessoa apagada com sucesso!");
     },
@@ -67,7 +66,7 @@ export default function PersonsPage() {
       icon: "warning",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
-      confirmButtonText: "Tenho certeza!",
+      confirmButtonText: "Apagar",
     }).then((result) => {
       if (result.isConfirmed) deletePerson(id);
     });
@@ -79,8 +78,8 @@ export default function PersonsPage() {
   );
 
   return (
-    <Page>
-      <SCForm onSubmit={submitCreatePerson}>
+    <PageSkeleton>
+      <FormContainer onSubmit={submitCreatePerson}>
         <Input
           required
           isLoading={isLoading}
@@ -104,6 +103,7 @@ export default function PersonsPage() {
         <SubmitButton isLoading={isLoading}>Criar pessoa</SubmitButton>
 
         <Table
+          isLoading={isLoading}
           items={persons?.map((person) => ({
             ...person,
             delete: (
@@ -121,17 +121,7 @@ export default function PersonsPage() {
             { key: "delete", label: "Apagar" },
           ]}
         />
-      </SCForm>
-    </Page>
+      </FormContainer>
+    </PageSkeleton>
   );
 }
-
-const SCForm = styled.form`
-  padding-left: 10px;
-  padding-right: 10px;
-  max-width: 500px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;

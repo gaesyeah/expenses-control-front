@@ -6,7 +6,7 @@ export default function useStateOnForm<T extends FormType>(initialData: T) {
 
   function onChangeData<K extends keyof T>(
     key: K,
-    { target: { value } }: ChangeEvent<HTMLInputElement>,
+    { target: { value } }: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) {
     setData((prev) => ({
       ...prev,

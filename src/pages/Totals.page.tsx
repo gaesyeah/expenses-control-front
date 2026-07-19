@@ -1,5 +1,5 @@
-import Page from "../components/Page.component";
+import PageSkeleton from "../components/PageSkeleton.component";
 
 export default function TotalsPage() {
-  return <Page>relatório</Page>;
+  return <PageSkeleton>relatório</PageSkeleton>;
 }

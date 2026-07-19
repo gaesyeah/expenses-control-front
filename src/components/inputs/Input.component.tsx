@@ -1,7 +1,8 @@
 import type { ComponentProps, HTMLInputTypeAttribute } from "react";
 import styled from "styled-components";
-import type useStateOnForm from "../hooks/useStateOnForm";
-import type { FormType } from "../types/form.types";
+import type { FormType } from "../../types/form.types";
+import { inputStyles, SCLabel } from "./styles";
+import type { InputStateOnFormProps } from "../../types/props.types";
 
 type AllowedInputType = Exclude<
   HTMLInputTypeAttribute,
@@ -16,13 +17,13 @@ type AllowedInputType = Exclude<
 >;
 
 type InputProps<T extends FormType, K extends keyof T> = Readonly<
-  Omit<ComponentProps<"input">, "type" | "value" | "onChange"> & {
-    type: AllowedInputType;
-    label?: string;
-    field: K;
-    stateOnForm: ReturnType<typeof useStateOnForm<T>>;
-    isLoading?: boolean;
-  }
+  InputStateOnFormProps<
+    Omit<ComponentProps<"input">, "type" | "value" | "onChange"> & {
+      type: AllowedInputType;
+    },
+    T,
+    K
+  >
 >;
 
 export default function Input<T extends FormType, K extends keyof T>({
@@ -49,16 +50,6 @@ export default function Input<T extends FormType, K extends keyof T>({
   );
 }
 
-const SCLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-`;
 const SCInput = styled.input<{ $isLoading?: boolean }>`
-  padding-left: 10px;
-  margin-top: 4px;
-  border-radius: 10px;
-  height: 40px;
-  &:disabled {
-    cursor: ${({ $isLoading }) => ($isLoading ? "progress" : undefined)};
-  }
+  ${inputStyles}
 `;

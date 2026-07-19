@@ -1,24 +1,32 @@
 import { type ReactNode } from "react";
-import styled from "styled-components";
+import styled, { type CSSProperties } from "styled-components";
 
 type TableItem = Record<string, ReactNode> & { id: string };
 
 type TableProps<T extends TableItem> = Readonly<{
   items: T[] | undefined;
   columns: { key: keyof T; label: string }[];
+  style?: CSSProperties;
+  isLoading?: boolean;
 }>;
 
 export default function Table<T extends TableItem>({
   items,
   columns,
+  style,
+  isLoading,
 }: TableProps<T>) {
+  if (isLoading) return null;
+
   return (
-    <SCTableContainer>
+    <SCTableContainer style={style}>
       <SCTable>
         <thead>
           <tr>
             {columns.map(({ key, label }) => (
-              <th key={String(key)}>{label}</th>
+              <th title={label} key={String(key)}>
+                {label}
+              </th>
             ))}
           </tr>
         </thead>
