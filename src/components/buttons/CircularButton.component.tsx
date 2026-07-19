@@ -28,9 +28,13 @@ export default function CircularButton({
 }
 
 const SCCircularButton = styled.button<{ $size: number; $isLoading?: boolean }>`
-  background-color: ${({ theme }) => theme.colors.background.white};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
   overflow: auto;
   border-radius: 100%;
+  background-color: ${({ theme }) => theme.colors.background.white};
   border: 2px solid ${({ theme }) => theme.colors.background.main};
   ${({ $size }) => css`
     width: ${$size}px;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Input from "../components/Input.component";
 import Page from "../components/Page.component";
 import useStateOnForm from "../hooks/useStateOnForm";
-import type { PersonDTO } from "../types/person.type";
+import type { PersonDTO, PersonResponse } from "../types/person.type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import PersonService from "../services/person.service";
 import { useMemo, type SubmitEvent } from "react";
@@ -13,8 +13,9 @@ import Table from "../components/Table.component";
 import CircularButton from "../components/buttons/CircularButton.component";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { QUERY_KEYS } from "../constants/queryKeys";
+import Swal from "sweetalert2";
 
-const initialPersonDTO: PersonDTO = { name: "", age: 0 };
+const initialPersonDTO: PersonDTO = { name: "", age: 1 };
 
 export default function PersonsPage() {
   const stateOnForm = useStateOnForm<PersonDTO>(initialPersonDTO);
@@ -39,7 +40,7 @@ export default function PersonsPage() {
       }
     },
   });
-  function submitPerson(e: SubmitEvent<HTMLFormElement>) {
+  function submitCreatePerson(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     createPerson(stateOnForm.data);
   }
@@ -59,6 +60,18 @@ export default function PersonsPage() {
       }
     },
   });
+  function confirmDeletePerson({ name, id }: PersonResponse) {
+    Swal.fire({
+      title: `Tem certeza que deseja deletar "${name}"?`,
+      text: "Não será possível reverter!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Tenho certeza!",
+    }).then((result) => {
+      if (result.isConfirmed) deletePerson(id);
+    });
+  }
 
   const isLoading = useMemo(
     () => isLoadingPersons || isCreatingPerson || isDeletingPerson,
@@ -67,7 +80,7 @@ export default function PersonsPage() {
 
   return (
     <Page>
-      <SCForm onSubmit={submitPerson}>
+      <SCForm onSubmit={submitCreatePerson}>
         <Input
           required
           isLoading={isLoading}
@@ -86,6 +99,7 @@ export default function PersonsPage() {
           field="age"
           type="number"
           max={150}
+          min={1}
         />
         <SubmitButton isLoading={isLoading}>Criar pessoa</SubmitButton>
 
@@ -95,7 +109,7 @@ export default function PersonsPage() {
             delete: (
               <CircularButton
                 isLoading={isLoading}
-                onClick={() => deletePerson(person.id)}
+                onClick={() => confirmDeletePerson(person)}
               >
                 <FaRegTrashCan size={20} />
               </CircularButton>
