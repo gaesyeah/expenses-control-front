@@ -7,6 +7,7 @@ export const theme = {
     },
     font: {
       white: "#FFFFFF",
+      main: "#61dbfb",
       gray: [],
     },
   },

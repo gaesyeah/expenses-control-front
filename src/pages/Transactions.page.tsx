@@ -1,3 +1,5 @@
+import Page from "../components/Page.component";
+
 export default function TransactionsPage() {
-  return <>transações</>;
+  return <Page>transações</Page>;
 }

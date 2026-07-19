@@ -1,11 +1,20 @@
 import styled from "styled-components";
+import { routes } from "../routes/routes.route";
+import NavigationButton from "./buttons/NavigationButton.component";
 
-const HEADER_HEIGHT = "50px";
+const HEADER_HEIGHT = "80px";
 
 export default function Header() {
   return (
     <>
-      <SCHeader>Controle de gastos</SCHeader>
+      <SCHeader>
+        Controle de gastos
+        <SCHeaderNavigation>
+          {Object.values(routes).map((route) => (
+            <NavigationButton route={route} key={route.label} />
+          ))}
+        </SCHeaderNavigation>
+      </SCHeader>
       <SCHeaderSpacer />
     </>
   );
@@ -23,6 +32,13 @@ const SCHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+`;
+const SCHeaderNavigation = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 `;
 const SCHeaderSpacer = styled.div`
   height: ${HEADER_HEIGHT};
