@@ -15,13 +15,7 @@ para cadastro de pessoas, transações financeiras e consulta de totais.
 
 ## Sobre as decisões técnicas deste projeto
 
-Este é um projeto relativamente simples, e a maior parte das decisões abaixo
-não seria estritamente necessária para o seu tamanho atual. Optei, no entanto,
-por aplicar algumas práticas mais avançadas de propósito, como o uso de
-**generics** para construir componentes reaproveitáveis (especialmente
-`Input` e formulários tipados), para demonstrar o tipo de arquitetura
-que eu adotaria em um sistema real de grande porte, onde esse nível de reuso
-e segurança de tipos se paga rapidamente.
+Este é um projeto simples, e a maior parte das decisões abaixo não seriam necessarias para o seu escopo (em outras palavras, matei uma formiga com uma bazuca). Optei, no entanto, por aplicar algumas práticas mais avançadas de propósito, como o uso de **generics** para construir um hook e componentes mais reaproveitáveis (especialmente `Input`, `Select` e seus usos em formulários tipados), para demonstrar o tipo de arquitetura que eu adotaria em um sistema real de grande porte, onde esse nível de reuso e segurança de tipos se paga rapidamente.
 
 ## Tecnologias
 
