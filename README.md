@@ -38,7 +38,7 @@ e segurança de tipos se paga rapidamente.
 ## Pré-requisitos
 
 - [Node.js](https://nodejs.org/) (versão 20 ou superior recomendada)
-- O back-end do projeto rodando (local ou usando a API já publicada) — veja as
+- Opcionalmente, o back-end rodando localmente para desenvolvimento, veja as
   instruções em [expenses-control-back](https://github.com/gaesyeah/expenses-control-back)
 
 ## Como rodar o projeto
@@ -58,15 +58,13 @@ e segurança de tipos se paga rapidamente.
 
 3. Configure as variáveis de ambiente:
 
-   Renomeie o arquivo `.env.example` para `.env`, e ajuste a URL da API
-   conforme o ambiente desejado:
+   Renomeie o arquivo `.env.example` para `.env` e escolha a URL da API de
+   acordo com o ambiente:
 
    ```bash
    # VITE_API_URL=https://expenses-control-api.onrender.com
    VITE_API_URL=http://localhost:5228
    ```
-
-   Por padrão, o projeto já vem configurado para apontar para a API local.
 
 4. Rode a aplicação:
 
@@ -74,20 +72,23 @@ e segurança de tipos se paga rapidamente.
    npm run dev
    ```
 
-### Testando localmente com o back-end
+## Testando localmente com o back-end
 
-Para testar o front-end contra a API local, é necessário que o back-end
-esteja rodando antes. Siga as instruções de setup em
+Para testar o front-end contra a API local, é necessário que o back-end esteja
+em execução. Siga as instruções de setup em
 [expenses-control-back](https://github.com/gaesyeah/expenses-control-back)
-para clonar e rodar a API.
+para clonar, configurar e iniciar a API.
 
-## Sobre a persistência de dados do back-end
+## Sobre o back-end
 
-O back-end utiliza **SQLite**. No ambiente hospedado (plano gratuito do
-Render), o sistema de arquivos é efêmero — ou seja, os dados podem ser
-resetados quando o serviço reinicia ou fica inativo por um tempo. Isso é
-esperado e não é um bug: a persistência real foi validada localmente, e o
-ambiente publicado serve principalmente para demonstração.
+O back-end utiliza **PostgreSQL**.
+
+Em desenvolvimento, o banco é executado em um container Docker, com persistência
+em um volume Docker.
+
+A versão publicada da API está hospedada no plano gratuito do Render. Caso o
+serviço permaneça inativo por algum tempo, o primeiro acesso pode levar cerca de
+1 minuto (cold start).
 
 ## Deploy
 
