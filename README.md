@@ -5,9 +5,13 @@ desafio técnico de estágio em TI (Desenvolvimento). Consome a API
 [expenses-control-back](https://github.com/gaesyeah/expenses-control-back)
 para cadastro de pessoas, transações financeiras e consulta de totais.
 
-![Tela de pessoas](./docs/screenshots/persons.png)
-![Tela de transações](./docs/screenshots/transactions.png)
-![Tela de totais](./docs/screenshots/totals.png)
+<p align="center">
+  <img src="./docs/screenshots/totals.png" alt="Tela de totais" width="98%" />
+</p>
+<p align="center">
+  <img src="./docs/screenshots/persons.png" alt="Tela de pessoas" width="49%" />
+  <img src="./docs/screenshots/transactions.png" alt="Tela de transações" width="49%" />
+</p>
 
 ## Sobre as decisões técnicas deste projeto
 
