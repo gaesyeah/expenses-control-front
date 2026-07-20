@@ -5,13 +5,17 @@ desafio técnico de estágio em TI (Desenvolvimento). Consome a API
 [expenses-control-back](https://github.com/gaesyeah/expenses-control-back)
 para cadastro de pessoas, transações financeiras e consulta de totais.
 
+![Tela de pessoas](./docs/screenshots/persons.png)
+![Tela de transações](./docs/screenshots/transactions.png)
+![Tela de totais](./docs/screenshots/totals.png)
+
 ## Sobre as decisões técnicas deste projeto
 
 Este é um projeto relativamente simples, e a maior parte das decisões abaixo
 não seria estritamente necessária para o seu tamanho atual. Optei, no entanto,
 por aplicar algumas práticas mais avançadas de propósito, como o uso de
 **generics** para construir componentes reaproveitáveis (especialmente
-`Input` e formulários tipados), para demonstrar o tipo de arquitetura 
+`Input` e formulários tipados), para demonstrar o tipo de arquitetura
 que eu adotaria em um sistema real de grande porte, onde esse nível de reuso
 e segurança de tipos se paga rapidamente.
 
