@@ -1,76 +1,90 @@
-# React + TypeScript + Vite
+# ExpensesControl
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Front-end do sistema de controle de gastos residenciais, desenvolvido como
+desafio técnico de estágio em TI (Desenvolvimento). Consome a API
+[expenses-control-back](https://github.com/gaesyeah/expenses-control-back)
+para cadastro de pessoas, transações financeiras e consulta de totais.
 
-Currently, two official plugins are available:
+## Sobre as decisões técnicas deste projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Este é um projeto relativamente simples, e a maior parte das decisões abaixo
+não seria estritamente necessária para o seu tamanho atual. Optei, no entanto,
+por aplicar algumas práticas mais avançadas de propósito, como o uso de
+**generics** para construir componentes reaproveitáveis (especialmente
+`Input` e formulários tipados), para demonstrar o tipo de arquitetura 
+que eu adotaria em um sistema real de grande porte, onde esse nível de reuso
+e segurança de tipos se paga rapidamente.
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** + **TypeScript**
+- **Vite** como build tool
+- **React Router** para navegação entre telas
+- **TanStack Query** para cache, loading e revalidação de dados da API
+- **Axios** para requisições HTTP
+- **styled-components** para estilização, com tema tipado
+- **SweetAlert2** para confirmações e alertas
+- **react-toastify** para notificações de sucesso/erro
+- **react-icons** e **react-loader-spinner** para ícones e indicadores de carregamento
 
-## Expanding the ESLint configuration
+## Pré-requisitos
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [Node.js](https://nodejs.org/) (versão 20 ou superior recomendada)
+- O back-end do projeto rodando (local ou usando a API já publicada) — veja as
+  instruções em [expenses-control-back](https://github.com/gaesyeah/expenses-control-back)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Como rodar o projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Clone o repositório:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   git clone https://github.com/gaesyeah/expenses-control-front.git
+   cd expenses-control-front
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+3. Configure as variáveis de ambiente:
+
+   Renomeie o arquivo `.env.example` para `.env`, e ajuste a URL da API
+   conforme o ambiente desejado:
+
+   ```bash
+   # VITE_API_URL=https://expenses-control-api.onrender.com
+   VITE_API_URL=http://localhost:5228
+   ```
+
+   Por padrão, o projeto já vem configurado para apontar para a API local.
+
+4. Rode a aplicação:
+
+   ```bash
+   npm run dev
+   ```
+
+### Testando localmente com o back-end
+
+Para testar o front-end contra a API local, é necessário que o back-end
+esteja rodando antes. Siga as instruções de setup em
+[expenses-control-back](https://github.com/gaesyeah/expenses-control-back)
+para clonar e rodar a API.
+
+## Sobre a persistência de dados do back-end
+
+O back-end utiliza **SQLite**. No ambiente hospedado (plano gratuito do
+Render), o sistema de arquivos é efêmero — ou seja, os dados podem ser
+resetados quando o serviço reinicia ou fica inativo por um tempo. Isso é
+esperado e não é um bug: a persistência real foi validada localmente, e o
+ambiente publicado serve principalmente para demonstração.
+
+## Deploy
+
+O front-end está publicado em:
 
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+https://expenses-control-front.vercel.app/
 ```
-# expenses-control-front
