@@ -59,6 +59,7 @@ export default function TransactionsPage() {
   const isSelectedPersonMinor =
     (persons?.find(({ id }) => id === personId)?.age ?? 18) < 18;
 
+  //Nem é dada a opção de adicionar uma 'Income' para um menor de idade
   const transactionTypeOptions = [
     { label: "despesa", value: TransactionType.Expense },
   ];
@@ -71,7 +72,10 @@ export default function TransactionsPage() {
 
   useEffect(() => {
     const isSelectedTypeIncome = type === TransactionType.Income;
-
+    //Se a pessoa selecionada for menor de idade e o tipo selecionado
+    //for 'Income', seta o tipo novamente para 'Expense'.
+    //?Para casos em que estava setado 'Income' e um maior de idade e a pessoa
+    //?foi alterada para uma menor. O tipo deve ser alterado automaticamente.
     if (isSelectedPersonMinor && isSelectedTypeIncome) {
       stateOnForm.setData((prev) => ({
         ...prev,
